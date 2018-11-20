@@ -51,4 +51,5 @@ public class User {
     }
 
     //TODO Add contacts: email, phones, other
+    //TODO Add unique constraint
 }

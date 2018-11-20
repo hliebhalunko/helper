@@ -49,4 +49,20 @@ public class UserServiceImpl implements UserService {
                 .map(DTOMapper::userToResponseDTO).collect(Collectors.toList());
     }
 
+    @Override
+    public Iterable<UserResponseDTO> getUsersWithNegativeBalance() {
+        return StreamSupport.stream(userRepository.findAll().spliterator(), false)
+                .filter(user -> user.getBalance() < 0)
+                .map(DTOMapper::userToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Iterable<UserResponseDTO> getUsersWithPositiveBalance() {
+        return StreamSupport.stream(userRepository.findAll().spliterator(), false)
+                .filter(user -> user.getBalance() >= 0)
+                .map(DTOMapper::userToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
 }

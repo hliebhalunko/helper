@@ -12,14 +12,21 @@ import java.util.stream.Collectors;
 public class DTOMapper {
 
     public static UserResponseDTO userToResponseDTO(User user) {
+        UserResponseDTO dto = userToChildlessResponseDTO(user);
+
+        dto.setContributions(user.getContributions().stream()
+                .map(DTOMapper::cashContributionToChildlessResponseDTO).collect(Collectors.toList()));
+
+        return dto;
+    }
+
+    public static UserResponseDTO userToChildlessResponseDTO(User user) {
         UserResponseDTO dto = new UserResponseDTO();
         dto.setId(user.getId());
         dto.setFirstName(user.getFirstName());
         dto.setLastName(user.getLastName());
         dto.setNickname(user.getNickname());
         dto.setBloodType(user.getBloodType());
-        dto.setContributions(user.getContributions().stream()
-                .map(cc -> cashContributionToResponseDTO(cc, user)).collect(Collectors.toList()));
         dto.setDateOfBirth(user.getDateOfBirth());
         dto.setDateOfEnlistment(user.getDateOfEnlistment());
         dto.setRank(user.getRank());
@@ -42,13 +49,18 @@ public class DTOMapper {
         return user;
     }
 
-    public static CashContributionResponseDTO cashContributionToResponseDTO(CashContribution cashContribution, User user) {
+    public static CashContributionResponseDTO cashContributionToResponseDTO(CashContribution cashContribution) {
+        CashContributionResponseDTO dto = cashContributionToChildlessResponseDTO(cashContribution);
+        dto.setUser(userToChildlessResponseDTO(cashContribution.getUser()));
+        return dto;
+    }
+
+    public static CashContributionResponseDTO cashContributionToChildlessResponseDTO(CashContribution cashContribution) {
         CashContributionResponseDTO dto = new CashContributionResponseDTO();
         dto.setId(cashContribution.getId());
         dto.setCashAmount(cashContribution.getCashAmount());
         dto.setDateOfContribution(cashContribution.getDateOfContribution());
         dto.setDescription(cashContribution.getDescription());
-        dto.setUserId(user.getId());
         return dto;
     }
 

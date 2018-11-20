@@ -13,4 +13,8 @@ public interface UserService {
     void updateUser(UserRequestDTO userRequestDTO) throws UserNotFoundException;
 
     Iterable<UserResponseDTO> getAllUsers();
+
+    Iterable<UserResponseDTO> getUsersWithNegativeBalance();
+
+    Iterable<UserResponseDTO> getUsersWithPositiveBalance();
 }

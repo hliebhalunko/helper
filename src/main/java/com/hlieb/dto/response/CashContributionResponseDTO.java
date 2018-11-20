@@ -1,5 +1,6 @@
 package com.hlieb.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -8,9 +9,10 @@ import java.time.LocalDate;
 public class CashContributionResponseDTO {
 
     private long id;
-    private long userId;
     private Integer cashAmount;
     private String description;
     private LocalDate dateOfContribution;
+    @JsonIgnore
+    private UserResponseDTO user;
 
 }

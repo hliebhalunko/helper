@@ -28,9 +28,23 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+    @GetMapping("/negative")
+    public ResponseEntity<?> getUsersWithNegativeBalance() {
+        Iterable<UserResponseDTO> users = userService.getUsersWithNegativeBalance();
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @GetMapping("/positive")
+    public ResponseEntity<?> getUsersWithPositiveBalance() {
+        Iterable<UserResponseDTO> users = userService.getUsersWithPositiveBalance();
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable long id) {
         userService.removeUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+
 }

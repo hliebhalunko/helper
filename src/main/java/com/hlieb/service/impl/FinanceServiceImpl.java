@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class FinanceServiceImpl implements FinanceService {
@@ -43,7 +44,13 @@ public class FinanceServiceImpl implements FinanceService {
     public List<CashContributionResponseDTO> getUserContributions(long userId) throws UserNotFoundException {
         Optional<User> userOpt = userRepository.findById(userId);
         User user = userOpt.orElseThrow(() -> new UserNotFoundException(userId));
-        return user.getContributions().stream().map(cc -> DTOMapper.cashContributionToResponseDTO(cc, user)).collect(Collectors.toList());
+        return user.getContributions().stream().map(DTOMapper::cashContributionToResponseDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CashContributionResponseDTO> getAllContributionsFromDate(LocalDate date) {
+        return StreamSupport.stream(cashContributionRepository.getAllContributionsBeforeDate(date).spliterator(), false)
+                .map(DTOMapper::cashContributionToResponseDTO).collect(Collectors.toList());
     }
 
 }

@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @RestController
 @RequestMapping("cash-contribution")
 public class FinanceController {
@@ -26,6 +28,12 @@ public class FinanceController {
     @RequestMapping("/user/{userId}")
     public ResponseEntity<?> getUserContributions(@PathVariable long userId) throws UserNotFoundException {
         return new ResponseEntity<>(financeService.getUserContributions(userId), HttpStatus.OK);
+    }
+
+    @GetMapping
+    @RequestMapping("/{date}")
+    public ResponseEntity<?> getAllContributionsFromDate(@PathVariable LocalDate date) {
+        return new ResponseEntity<>(financeService.getAllContributionsFromDate(date), HttpStatus.OK);
     }
 
 }

@@ -2,10 +2,7 @@ package com.hlieb.entity;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -21,5 +18,7 @@ public class CashContribution {
     private LocalDate dateOfContribution;
     @Column
     private String description;
+    @ManyToOne
+    private User user;
 
 }
