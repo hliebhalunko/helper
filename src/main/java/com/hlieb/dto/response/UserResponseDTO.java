@@ -21,5 +21,6 @@ public class UserResponseDTO {
     private List<CashContributionResponseDTO> contributions;
     private BloodType bloodType;
     private UserStatus userStatus;
+    private Integer balance;
 
 }

@@ -41,11 +41,14 @@ public class User {
     @Column
     @NotNull
     private UserStatus userStatus;
+    @Column
+    @NotNull
+    private Integer balance;
 
     public void addCashContribution(CashContribution cashContribution) {
         contributions.add(cashContribution);
+        this.balance = balance + cashContribution.getCashAmount();
     }
-
 
     //TODO Add contacts: email, phones, other
 }

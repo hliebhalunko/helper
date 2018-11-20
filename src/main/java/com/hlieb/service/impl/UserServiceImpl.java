@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserService {
     public long addUser(UserRequestDTO userRequestDTO) {
         User user = new User();
         DTOMapper.requestDTOtoUser(user, userRequestDTO);
+        user.setBalance(0);
         user = userRepository.save(user);
         return user.getId();
     }

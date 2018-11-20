@@ -24,6 +24,7 @@ public class DTOMapper {
         dto.setDateOfEnlistment(user.getDateOfEnlistment());
         dto.setRank(user.getRank());
         dto.setUserStatus(user.getUserStatus());
+        dto.setBalance(user.getBalance());
         return dto;
     }
 

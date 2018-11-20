@@ -18,8 +18,8 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> addUser(UserRequestDTO userRequestDTO) {
-        userService.addUser(userRequestDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
+        long userId = userService.addUser(userRequestDTO);
+        return new ResponseEntity<>(userId, HttpStatus.OK);
     }
 
     @GetMapping
