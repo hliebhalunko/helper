@@ -1,8 +1,8 @@
-package com.hlieb.helper.entity;
+package com.hlieb.entity;
 
-import com.hlieb.helper.enums.BloodType;
-import com.hlieb.helper.enums.Rank;
-import com.hlieb.helper.enums.UserStatus;
+import com.hlieb.enums.BloodType;
+import com.hlieb.enums.Rank;
+import com.hlieb.enums.UserStatus;
 import lombok.Data;
 
 import javax.persistence.*;

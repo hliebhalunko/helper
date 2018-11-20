@@ -1,4 +1,4 @@
-package com.hlieb.helper.dto;
+package com.hlieb.dto;
 
 import lombok.Data;
 

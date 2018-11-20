@@ -1,10 +1,10 @@
-package com.hlieb.helper.service.impl;
+package com.hlieb.service.impl;
 
-import com.hlieb.helper.dto.UserDTO;
-import com.hlieb.helper.entity.User;
-import com.hlieb.helper.exceptions.UserNotFoundException;
-import com.hlieb.helper.repository.UserRepository;
-import com.hlieb.helper.service.UserService;
+import com.hlieb.dto.UserDTO;
+import com.hlieb.entity.User;
+import com.hlieb.exceptions.UserNotFoundException;
+import com.hlieb.repository.UserRepository;
+import com.hlieb.service.UserService;
 import com.jcabi.aspects.Loggable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

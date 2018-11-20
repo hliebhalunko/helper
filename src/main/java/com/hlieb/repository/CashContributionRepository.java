@@ -1,6 +1,6 @@
-package com.hlieb.helper.repository;
+package com.hlieb.repository;
 
-import com.hlieb.helper.entity.CashContribution;
+import com.hlieb.entity.CashContribution;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.hlieb.helper.enums;
+package com.hlieb.enums;
 
 import lombok.Getter;
 

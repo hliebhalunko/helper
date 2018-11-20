@@ -1,8 +1,8 @@
-package com.hlieb.helper.controller;
+package com.hlieb.controller;
 
-import com.hlieb.helper.dto.UserDTO;
-import com.hlieb.helper.entity.User;
-import com.hlieb.helper.service.UserService;
+import com.hlieb.dto.UserDTO;
+import com.hlieb.entity.User;
+import com.hlieb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

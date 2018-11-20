@@ -1,4 +1,4 @@
-package com.hlieb;
+package com.hlieb.config;
 
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.logging.Log;

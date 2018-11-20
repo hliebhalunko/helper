@@ -1,4 +1,4 @@
-package com.hlieb.helper.controller;
+package com.hlieb.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

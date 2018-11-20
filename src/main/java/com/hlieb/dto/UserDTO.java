@@ -1,8 +1,8 @@
-package com.hlieb.helper.dto;
+package com.hlieb.dto;
 
-import com.hlieb.helper.enums.BloodType;
-import com.hlieb.helper.enums.Rank;
-import com.hlieb.helper.enums.UserStatus;
+import com.hlieb.enums.BloodType;
+import com.hlieb.enums.Rank;
+import com.hlieb.enums.UserStatus;
 import lombok.Data;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.hlieb;
+package com.hlieb.config;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -41,7 +41,7 @@ public class LoggingAspectConfig {
     @Bean
     public Advisor customizableTraceAdvisor() {
         final AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-        pointcut.setExpression("com.hlieb.LoggingAspectConfig.customizableTrace()");
+        pointcut.setExpression("com.hlieb.config.LoggingAspectConfig.customizableTrace()");
         return new DefaultPointcutAdvisor(pointcut, customizableTraceInterceptor());
     }
 

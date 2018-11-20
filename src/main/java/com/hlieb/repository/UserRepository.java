@@ -1,6 +1,6 @@
-package com.hlieb.helper.repository;
+package com.hlieb.repository;
 
-import com.hlieb.helper.entity.User;
+import com.hlieb.entity.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.hlieb.helper.entity;
+package com.hlieb.entity;
 
 import lombok.Data;
 

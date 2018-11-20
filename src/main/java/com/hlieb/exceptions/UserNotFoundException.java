@@ -1,4 +1,4 @@
-package com.hlieb.helper.exceptions;
+package com.hlieb.exceptions;
 
 public class UserNotFoundException extends Exception {
 

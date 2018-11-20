@@ -1,8 +1,8 @@
-package com.hlieb.helper.service;
+package com.hlieb.service;
 
-import com.hlieb.helper.dto.UserDTO;
-import com.hlieb.helper.entity.User;
-import com.hlieb.helper.exceptions.UserNotFoundException;
+import com.hlieb.entity.User;
+import com.hlieb.dto.UserDTO;
+import com.hlieb.exceptions.UserNotFoundException;
 
 public interface UserService {
 
