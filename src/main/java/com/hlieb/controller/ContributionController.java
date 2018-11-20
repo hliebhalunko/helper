@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("cash-contribution")
-public class FinanceController {
+public class ContributionController {
 
     @Autowired
     private FinanceService financeService;
@@ -33,5 +33,7 @@ public class FinanceController {
     public ResponseEntity<?> getAllContributionsFromDate(@PathVariable String date) {
         return new ResponseEntity<>(financeService.getAllContributionsFromDate(date), HttpStatus.OK);
     }
+
+
 
 }

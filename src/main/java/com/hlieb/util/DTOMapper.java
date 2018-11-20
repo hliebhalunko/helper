@@ -1,8 +1,10 @@
 package com.hlieb.util;
 
 import com.hlieb.dto.request.UserRequestDTO;
+import com.hlieb.dto.response.BalanceTransactionResponseDTO;
 import com.hlieb.dto.response.CashContributionResponseDTO;
 import com.hlieb.dto.response.UserResponseDTO;
+import com.hlieb.entity.BalanceTransaction;
 import com.hlieb.entity.CashContribution;
 import com.hlieb.entity.User;
 
@@ -64,4 +66,15 @@ public class DTOMapper {
         return dto;
     }
 
+    public static BalanceTransactionResponseDTO balanceTransactionToResponseDTO(BalanceTransaction balanceTransaction) {
+        BalanceTransactionResponseDTO dto = new BalanceTransactionResponseDTO();
+        dto.setId(balanceTransaction.getId());
+        dto.setAmount(balanceTransaction.getAmount());
+        dto.setCurrentBalance(balanceTransaction.getCurrentBalance());
+        dto.setDate(balanceTransaction.getDate());
+        dto.setDescription(balanceTransaction.getDescription());
+        dto.setResponsiveUser(userToChildlessResponseDTO(balanceTransaction.getResponsiveUser()));
+
+        return dto;
+    }
 }

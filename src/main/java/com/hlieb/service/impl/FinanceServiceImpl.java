@@ -1,10 +1,14 @@
 package com.hlieb.service.impl;
 
+import com.hlieb.dto.request.BalanceTransactionRequestDTO;
 import com.hlieb.dto.request.CashContributionRequestDTO;
+import com.hlieb.dto.response.BalanceTransactionResponseDTO;
 import com.hlieb.dto.response.CashContributionResponseDTO;
+import com.hlieb.entity.BalanceTransaction;
 import com.hlieb.entity.CashContribution;
 import com.hlieb.entity.User;
 import com.hlieb.exceptions.UserNotFoundException;
+import com.hlieb.repository.BalanceTransactionRepository;
 import com.hlieb.repository.CashContributionRepository;
 import com.hlieb.repository.UserRepository;
 import com.hlieb.service.FinanceService;
@@ -25,6 +29,8 @@ public class FinanceServiceImpl implements FinanceService {
     private UserRepository userRepository;
     @Autowired
     private CashContributionRepository cashContributionRepository;
+    @Autowired
+    private BalanceTransactionRepository balanceTransactionRepository;
 
     @Override
     public void addContributionFromUser(CashContributionRequestDTO cashContributionRequestDTO) throws UserNotFoundException {
@@ -51,6 +57,34 @@ public class FinanceServiceImpl implements FinanceService {
     public List<CashContributionResponseDTO> getAllContributionsFromDate(String date) {
         return StreamSupport.stream(cashContributionRepository.getAllContributionsBeforeDate(LocalDate.parse(date)).spliterator(), false)
                 .map(DTOMapper::cashContributionToResponseDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BalanceTransactionResponseDTO> getMonthlyBalance() {
+        return balanceTransactionRepository.findTop30ByOrderByIdDesc().stream()
+                .map(DTOMapper::balanceTransactionToResponseDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public void conductTransaction(BalanceTransactionRequestDTO dto) throws UserNotFoundException {
+        BalanceTransaction balanceTransaction = new BalanceTransaction();
+        if (balanceTransactionRepository.count() == 0) {
+            balanceTransaction.setCurrentBalance(dto.getAmount());
+        } else {
+            balanceTransaction.setCurrentBalance(
+                    balanceTransactionRepository.findTopByOrderByIdDesc().getCurrentBalance() + dto.getAmount());
+        }
+
+        balanceTransaction.setAmount(dto.getAmount());
+        balanceTransaction.setDate(LocalDate.now());
+        balanceTransaction.setDescription(dto.getDescription());
+        balanceTransaction.setResponsiveUser(userRepository.findById(dto.getResponsiveUserId())
+                .orElseThrow(() -> new UserNotFoundException(dto.getResponsiveUserId())));
+        balanceTransaction.setType(dto.getType());
+
+        balanceTransactionRepository.save(balanceTransaction);
+
+
     }
 
 }
