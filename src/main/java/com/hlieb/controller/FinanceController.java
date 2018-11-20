@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-
 @RestController
 @RequestMapping("cash-contribution")
 public class FinanceController {
@@ -32,7 +30,7 @@ public class FinanceController {
 
     @GetMapping
     @RequestMapping("/{date}")
-    public ResponseEntity<?> getAllContributionsFromDate(@PathVariable LocalDate date) {
+    public ResponseEntity<?> getAllContributionsFromDate(@PathVariable String date) {
         return new ResponseEntity<>(financeService.getAllContributionsFromDate(date), HttpStatus.OK);
     }
 

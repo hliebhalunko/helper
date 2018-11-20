@@ -48,8 +48,8 @@ public class FinanceServiceImpl implements FinanceService {
     }
 
     @Override
-    public List<CashContributionResponseDTO> getAllContributionsFromDate(LocalDate date) {
-        return StreamSupport.stream(cashContributionRepository.getAllContributionsBeforeDate(date).spliterator(), false)
+    public List<CashContributionResponseDTO> getAllContributionsFromDate(String date) {
+        return StreamSupport.stream(cashContributionRepository.getAllContributionsBeforeDate(LocalDate.parse(date)).spliterator(), false)
                 .map(DTOMapper::cashContributionToResponseDTO).collect(Collectors.toList());
     }
 
