@@ -8,6 +8,7 @@ import com.hlieb.exceptions.UserNotFoundException;
 import com.hlieb.repository.CashContributionRepository;
 import com.hlieb.repository.UserRepository;
 import com.hlieb.service.FinanceService;
+import com.hlieb.util.DTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,16 +43,7 @@ public class FinanceServiceImpl implements FinanceService {
     public List<CashContributionResponseDTO> getUserContributions(long userId) throws UserNotFoundException {
         Optional<User> userOpt = userRepository.findById(userId);
         User user = userOpt.orElseThrow(() -> new UserNotFoundException(userId));
-        return user.getContributions().stream().map(cc -> toCashContributionResponseDTO(cc, user)).collect(Collectors.toList());
+        return user.getContributions().stream().map(cc -> DTOMapper.cashContributionToResponseDTO(cc, user)).collect(Collectors.toList());
     }
 
-    private CashContributionResponseDTO toCashContributionResponseDTO(CashContribution cashContribution, User user) {
-        CashContributionResponseDTO dto = new CashContributionResponseDTO();
-        dto.setId(cashContribution.getId());
-        dto.setCashAmount(cashContribution.getCashAmount());
-        dto.setDateOfContribution(cashContribution.getDateOfContribution());
-        dto.setDescription(cashContribution.getDescription());
-        dto.setUserId(user.getId());
-        return dto;
-    }
 }

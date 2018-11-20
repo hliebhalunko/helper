@@ -1,16 +1,16 @@
 package com.hlieb.service;
 
-import com.hlieb.entity.User;
-import com.hlieb.dto.UserDTO;
+import com.hlieb.dto.response.UserResponseDTO;
+import com.hlieb.dto.request.UserRequestDTO;
 import com.hlieb.exceptions.UserNotFoundException;
 
 public interface UserService {
 
-    long addUser(UserDTO userDTO);
+    long addUser(UserRequestDTO userRequestDTO);
 
     void removeUser(long userId);
 
-    void updateUser(UserDTO userDTO) throws UserNotFoundException;
+    void updateUser(UserRequestDTO userRequestDTO) throws UserNotFoundException;
 
-    Iterable<User> getAllUsers();
+    Iterable<UserResponseDTO> getAllUsers();
 }

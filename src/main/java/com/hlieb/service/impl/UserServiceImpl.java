@@ -1,16 +1,18 @@
 package com.hlieb.service.impl;
 
-import com.hlieb.dto.UserDTO;
+import com.hlieb.dto.request.UserRequestDTO;
+import com.hlieb.dto.response.UserResponseDTO;
 import com.hlieb.entity.User;
 import com.hlieb.exceptions.UserNotFoundException;
 import com.hlieb.repository.UserRepository;
 import com.hlieb.service.UserService;
-import com.jcabi.aspects.Loggable;
+import com.hlieb.util.DTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -19,9 +21,9 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public long addUser(UserDTO userDTO) {
+    public long addUser(UserRequestDTO userRequestDTO) {
         User user = new User();
-        setValuesFromDTO(user, userDTO);
+        DTOMapper.requestDTOtoUser(user, userRequestDTO);
         user = userRepository.save(user);
         return user.getId();
     }
@@ -32,32 +34,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(UserDTO userDTO) throws UserNotFoundException {
+    public void updateUser(UserRequestDTO userRequestDTO) throws UserNotFoundException {
 
-        Optional<User> userOpt = userRepository.findById(userDTO.getId());
-        User user = setValuesFromDTO(userOpt.orElseThrow(() -> new UserNotFoundException(userDTO.getId())), userDTO);
+        Optional<User> userOpt = userRepository.findById(userRequestDTO.getId());
+        User user = DTOMapper.requestDTOtoUser(userOpt.orElseThrow(() -> new UserNotFoundException(userRequestDTO.getId())), userRequestDTO);
         userRepository.save(user);
 
     }
 
     @Override
-    @Loggable
-    public Iterable<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    private User setValuesFromDTO(User user, UserDTO userDTO) {
-
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setNickname(userDTO.getNickname());
-        user.setBloodType(userDTO.getBloodType());
-        user.setDateOfBirth(LocalDate.parse(userDTO.getDateOfBirth()));
-        user.setDateOfEnlistment(LocalDate.parse(userDTO.getDateOfEnlistment()));
-        user.setRank(userDTO.getRank());
-        user.setUserStatus(userDTO.getUserStatus());
-
-        return user;
+    public Iterable<UserResponseDTO> getAllUsers() {
+        return StreamSupport.stream(userRepository.findAll().spliterator(), false)
+                .map(DTOMapper::userToResponseDTO).collect(Collectors.toList());
     }
 
 }

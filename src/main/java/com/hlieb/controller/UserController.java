@@ -1,6 +1,7 @@
 package com.hlieb.controller;
 
-import com.hlieb.dto.UserDTO;
+import com.hlieb.dto.request.UserRequestDTO;
+import com.hlieb.dto.response.UserResponseDTO;
 import com.hlieb.entity.User;
 import com.hlieb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +17,14 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<?> addUser(UserDTO userDTO) {
-        userService.addUser(userDTO);
+    public ResponseEntity<?> addUser(UserRequestDTO userRequestDTO) {
+        userService.addUser(userRequestDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<?> getAllUsers() {
-        Iterable<User> users = userService.getAllUsers();
+        Iterable<UserResponseDTO> users = userService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
