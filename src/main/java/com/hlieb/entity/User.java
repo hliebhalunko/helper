@@ -4,8 +4,10 @@ import com.hlieb.enums.BloodType;
 import com.hlieb.enums.Rank;
 import com.hlieb.enums.UserStatus;
 import lombok.Data;
+import lombok.NonNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -22,6 +24,7 @@ public class User {
     @Column
     private String lastName;
     @Column
+    @NotNull
     private String nickname;
     @Column
     private LocalDate dateOfBirth;
@@ -31,11 +34,17 @@ public class User {
     @JoinColumn(name = "user_id")
     private List<CashContribution> contributions;
     @Column
+    @NotNull
     private Rank rank;
     @Column
     private BloodType bloodType;
     @Column
+    @NotNull
     private UserStatus userStatus;
+
+    public void addCashContribution(CashContribution cashContribution) {
+        contributions.add(cashContribution);
+    }
 
 
     //TODO Add contacts: email, phones, other

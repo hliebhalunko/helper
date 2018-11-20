@@ -19,5 +19,7 @@ public class CashContribution {
     private Integer cashAmount;
     @Column
     private LocalDate dateOfContribution;
+    @Column
+    private String description;
 
 }

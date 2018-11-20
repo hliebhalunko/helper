@@ -1,4 +1,4 @@
-package com.hlieb.helper;
+package com.hlieb;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
