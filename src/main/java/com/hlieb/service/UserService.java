@@ -1,7 +1,7 @@
 package com.hlieb.service;
 
-import com.hlieb.dto.response.UserResponseDTO;
 import com.hlieb.dto.request.UserRequestDTO;
+import com.hlieb.dto.response.UserResponseDTO;
 import com.hlieb.exceptions.UserNotFoundException;
 
 public interface UserService {

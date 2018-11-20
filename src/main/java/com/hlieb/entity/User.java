@@ -4,7 +4,6 @@ import com.hlieb.enums.BloodType;
 import com.hlieb.enums.Rank;
 import com.hlieb.enums.UserStatus;
 import lombok.Data;
-import lombok.NonNull;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

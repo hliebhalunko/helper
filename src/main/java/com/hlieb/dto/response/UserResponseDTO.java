@@ -1,5 +1,6 @@
 package com.hlieb.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hlieb.enums.BloodType;
 import com.hlieb.enums.Rank;
 import com.hlieb.enums.UserStatus;
@@ -18,6 +19,7 @@ public class UserResponseDTO {
     private LocalDate dateOfBirth;
     private LocalDate dateOfEnlistment;
     private Rank rank;
+    @JsonIgnore
     private List<CashContributionResponseDTO> contributions;
     private BloodType bloodType;
     private UserStatus userStatus;

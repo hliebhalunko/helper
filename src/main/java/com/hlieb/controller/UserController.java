@@ -2,7 +2,6 @@ package com.hlieb.controller;
 
 import com.hlieb.dto.request.UserRequestDTO;
 import com.hlieb.dto.response.UserResponseDTO;
-import com.hlieb.entity.User;
 import com.hlieb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

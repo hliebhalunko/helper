@@ -23,7 +23,7 @@ public class ScheduledTasks {
     private UserRepository userRepository;
 
     @Scheduled(cron = "0 0 9 1 * ?")
-    public void updateMonthlyBalance(){
+    public void updateMonthlyBalance() {
         LOG.info("Monthly balance update task started! Monthly contribution size: " + MONTHLY_CONTRIBUTION_SIZE);
         Iterable<User> allUsers = userRepository.findAll();
         allUsers.forEach(u -> u.setBalance(u.getBalance() - MONTHLY_CONTRIBUTION_SIZE));
