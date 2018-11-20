@@ -13,7 +13,6 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
-@Loggable
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -42,6 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Loggable
     public Iterable<User> getAllUsers() {
         return userRepository.findAll();
     }
