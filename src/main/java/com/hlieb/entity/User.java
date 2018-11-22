@@ -49,6 +49,10 @@ public class User {
         this.balance = balance + cashContribution.getCashAmount();
     }
 
+    public String getShortToString() {
+        return rank.getRank() + " " + firstName + " " + nickname + " " + lastName;
+    }
+
     //TODO Add contacts: email, phones, other
     //TODO Add unique constraint
 }

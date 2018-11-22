@@ -14,6 +14,9 @@ import com.hlieb.repository.UserRepository;
 import com.hlieb.service.FinanceService;
 import com.hlieb.util.DTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -23,8 +26,11 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
+@PropertySource("classpath:application.properties")
 public class FinanceServiceImpl implements FinanceService {
 
+    @Value("contribution.transaction.prefix")
+    private static String CONTRIBUTION_TRANSACTION_PREFIX;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -36,12 +42,25 @@ public class FinanceServiceImpl implements FinanceService {
     public void addContributionFromUser(CashContributionRequestDTO cashContributionRequestDTO) throws UserNotFoundException {
         Optional<User> userOpt = userRepository.findById(cashContributionRequestDTO.getUserId());
         User user = userOpt.orElseThrow(() -> new UserNotFoundException(cashContributionRequestDTO.getUserId()));
+
+        Optional<User> responsiveUserOpt = userRepository.findById(cashContributionRequestDTO.getResponsiveUserId());
+        User responsiveUser = responsiveUserOpt.orElseThrow(() -> new UserNotFoundException(cashContributionRequestDTO.getResponsiveUserId()));
+
         CashContribution cashContribution = new CashContribution();
         cashContribution.setCashAmount(cashContributionRequestDTO.getCashAmount());
         cashContribution.setDateOfContribution(LocalDate.now());
         cashContribution.setDescription(cashContributionRequestDTO.getDescription());
         user.addCashContribution(cashContribution);
 
+        BalanceTransaction balanceTransaction = new BalanceTransaction();
+        balanceTransaction.setType(cashContributionRequestDTO.getType());
+        balanceTransaction.setAmount(cashContributionRequestDTO.getCashAmount());
+        balanceTransaction.setDate(LocalDate.now());
+        balanceTransaction.setDescription(CONTRIBUTION_TRANSACTION_PREFIX + " User: " + user.getShortToString() + " " + cashContributionRequestDTO.getDescription());
+        balanceTransaction.setCurrentBalance(calculateCurrentBalance(cashContributionRequestDTO.getCashAmount()));
+        balanceTransaction.setResponsiveUser(responsiveUser);
+
+        balanceTransactionRepository.save(balanceTransaction);
         cashContributionRepository.save(cashContribution);
         userRepository.save(user);
     }
@@ -67,14 +86,9 @@ public class FinanceServiceImpl implements FinanceService {
 
     @Override
     public void conductTransaction(BalanceTransactionRequestDTO dto) throws UserNotFoundException {
-        BalanceTransaction balanceTransaction = new BalanceTransaction();
-        if (balanceTransactionRepository.count() == 0) {
-            balanceTransaction.setCurrentBalance(dto.getAmount());
-        } else {
-            balanceTransaction.setCurrentBalance(
-                    balanceTransactionRepository.findTopByOrderByIdDesc().getCurrentBalance() + dto.getAmount());
-        }
 
+        BalanceTransaction balanceTransaction = new BalanceTransaction();
+        balanceTransaction.setCurrentBalance(calculateCurrentBalance(balanceTransaction.getAmount()));
         balanceTransaction.setAmount(dto.getAmount());
         balanceTransaction.setDate(LocalDate.now());
         balanceTransaction.setDescription(dto.getDescription());
@@ -84,7 +98,14 @@ public class FinanceServiceImpl implements FinanceService {
 
         balanceTransactionRepository.save(balanceTransaction);
 
+    }
 
+    private Integer calculateCurrentBalance(Integer lastTransactionAmount) {
+        if (balanceTransactionRepository.count() == 0) {
+            return lastTransactionAmount;
+        } else {
+            return balanceTransactionRepository.findTopByOrderByIdDesc().getCurrentBalance() + lastTransactionAmount;
+        }
     }
 
 }
