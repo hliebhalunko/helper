@@ -1,5 +1,6 @@
 package com.hlieb.entity;
 
+import com.hlieb.enums.FinancialSourceType;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,5 +21,8 @@ public class CashContribution {
     private String description;
     @ManyToOne
     private User user;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private FinancialSourceType financialSourceType;
 
 }

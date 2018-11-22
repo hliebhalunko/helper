@@ -31,7 +31,8 @@ public class BalanceTransaction {
     private Integer currentBalance;
     @Column
     @NotNull
-    private FinancialSourceType type;
+    @Enumerated(EnumType.STRING)
+    private FinancialSourceType financialSourceType;
 
 
 }

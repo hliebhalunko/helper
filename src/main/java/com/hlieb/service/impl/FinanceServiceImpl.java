@@ -16,7 +16,6 @@ import com.hlieb.util.DTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -50,10 +49,11 @@ public class FinanceServiceImpl implements FinanceService {
         cashContribution.setCashAmount(cashContributionRequestDTO.getCashAmount());
         cashContribution.setDateOfContribution(LocalDate.now());
         cashContribution.setDescription(cashContributionRequestDTO.getDescription());
+        cashContribution.setFinancialSourceType(cashContributionRequestDTO.getType());
         user.addCashContribution(cashContribution);
 
         BalanceTransaction balanceTransaction = new BalanceTransaction();
-        balanceTransaction.setType(cashContributionRequestDTO.getType());
+        balanceTransaction.setFinancialSourceType(cashContributionRequestDTO.getType());
         balanceTransaction.setAmount(cashContributionRequestDTO.getCashAmount());
         balanceTransaction.setDate(LocalDate.now());
         balanceTransaction.setDescription(CONTRIBUTION_TRANSACTION_PREFIX + " User: " + user.getShortToString() + " " + cashContributionRequestDTO.getDescription());
@@ -94,7 +94,7 @@ public class FinanceServiceImpl implements FinanceService {
         balanceTransaction.setDescription(dto.getDescription());
         balanceTransaction.setResponsiveUser(userRepository.findById(dto.getResponsiveUserId())
                 .orElseThrow(() -> new UserNotFoundException(dto.getResponsiveUserId())));
-        balanceTransaction.setType(dto.getType());
+        balanceTransaction.setFinancialSourceType(dto.getType());
 
         balanceTransactionRepository.save(balanceTransaction);
 
