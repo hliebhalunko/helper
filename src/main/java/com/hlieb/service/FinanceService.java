@@ -9,13 +9,14 @@ import com.hlieb.exceptions.UserNotFoundException;
 import java.util.List;
 
 public interface FinanceService {
+
     void addContributionFromUser(CashContributionRequestDTO cashContributionRequestDTO) throws UserNotFoundException;
 
     List<CashContributionResponseDTO> getUserContributions(long userId) throws UserNotFoundException;
 
     List<CashContributionResponseDTO> getAllContributionsFromDate(String date);
 
-    List<BalanceTransactionResponseDTO> getMonthlyBalance();
+    List<BalanceTransactionResponseDTO> getBalance(Integer daysDepth, String fromDate, String tillDate);
 
     void conductTransaction(BalanceTransactionRequestDTO dto) throws UserNotFoundException;
 }

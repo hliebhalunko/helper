@@ -1,5 +1,6 @@
 package com.hlieb.service.impl;
 
+import com.google.common.base.Strings;
 import com.hlieb.dto.request.BalanceTransactionRequestDTO;
 import com.hlieb.dto.request.CashContributionRequestDTO;
 import com.hlieb.dto.response.BalanceTransactionResponseDTO;
@@ -19,10 +20,15 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+
+import static com.google.common.base.Strings.isNullOrEmpty;
+import static java.util.Objects.isNull;
 
 @Service
 @PropertySource("classpath:application.properties")
@@ -79,9 +85,29 @@ public class FinanceServiceImpl implements FinanceService {
     }
 
     @Override
-    public List<BalanceTransactionResponseDTO> getMonthlyBalance() {
-        return balanceTransactionRepository.findTop30ByOrderByIdDesc().stream()
-                .map(DTOMapper::balanceTransactionToResponseDTO).collect(Collectors.toList());
+    public List<BalanceTransactionResponseDTO> getBalance(Integer daysDepth, String fromDate, String tillDate) {
+        List<BalanceTransaction> result = new ArrayList<>();
+        if(!isNull(daysDepth)){
+            LocalDate startDate = LocalDate.now().minusDays(daysDepth - 1);
+            result = balanceTransactionRepository.findByDateGreaterThanOrderByIdDesc(startDate);
+        }
+        if(!isNullOrEmpty(fromDate) && isNullOrEmpty(tillDate)){
+            LocalDate startDate = LocalDate.parse(fromDate);
+            result = balanceTransactionRepository.findByDateGreaterThanOrderByIdDesc(startDate);
+        }
+        if(isNullOrEmpty(fromDate) && !isNullOrEmpty(tillDate)){
+            LocalDate startDate = LocalDate.parse(tillDate);
+            result = balanceTransactionRepository.findByDateLessThanOrderByIdDesc(startDate);
+        }
+        if(!isNullOrEmpty(fromDate) && !isNullOrEmpty(tillDate)){
+            LocalDate startDate = LocalDate.parse(fromDate);
+            LocalDate endDate = LocalDate.parse(tillDate);
+            result = balanceTransactionRepository.findByDateBetweenOrderByIdDesc(startDate, endDate);
+        }
+        if(isNull(daysDepth)&& isNullOrEmpty(fromDate)&& isNullOrEmpty(tillDate)){
+            result = (List<BalanceTransaction>) balanceTransactionRepository.findAll();
+        }
+        return result.stream().map(DTOMapper::balanceTransactionToResponseDTO).collect(Collectors.toList());
     }
 
     @Override

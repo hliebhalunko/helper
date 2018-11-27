@@ -7,10 +7,7 @@ import com.hlieb.service.FinanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,8 +19,10 @@ public class BalanceController {
     private FinanceService financeService;
 
     @GetMapping
-    public ResponseEntity<?> getMonthlyBalance(){
-        List<BalanceTransactionResponseDTO> fullBalance = financeService.getMonthlyBalance();
+    public ResponseEntity<?> getBalance(@RequestParam(required = false) Integer daysDepth,
+                                        @RequestParam(required = false) String fromDate,
+                                        @RequestParam(required = false) String tillDate) {
+        List<BalanceTransactionResponseDTO> fullBalance = financeService.getBalance(daysDepth, fromDate, tillDate);
         return new ResponseEntity<>(fullBalance, HttpStatus.OK);
     }
 
