@@ -37,6 +37,13 @@ public class DTOMapper {
         return dto;
     }
 
+    public static UserResponseDTO userToBalanceResponseDTO(User user) {
+        UserResponseDTO dto = new UserResponseDTO();
+        dto.setNickname(user.getNickname());
+        dto.setBalance(user.getBalance());
+        return dto;
+    }
+
     public static User requestDTOtoUser(User user, UserRequestDTO userRequestDTO) {
 
         user.setFirstName(userRequestDTO.getFirstName());

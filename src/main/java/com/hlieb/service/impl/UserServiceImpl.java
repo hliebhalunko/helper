@@ -56,17 +56,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Iterable<UserResponseDTO> getUsersWithNegativeBalance() {
-        return StreamSupport.stream(userRepository.findAll().spliterator(), false)
-                .filter(user -> user.getBalance() < 0)
-                .map(DTOMapper::userToResponseDTO)
+        return userRepository.findByBalanceLessThanOrderByBalanceAsc(0).stream()
+                .map(DTOMapper::userToBalanceResponseDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
+
     public Iterable<UserResponseDTO> getUsersWithPositiveBalance() {
-        return StreamSupport.stream(userRepository.findAll().spliterator(), false)
-                .filter(user -> user.getBalance() >= 0)
-                .map(DTOMapper::userToResponseDTO)
+        return userRepository.findByBalanceGreaterThanEqualOrderByBalanceDesc(0).stream()
+                .map(DTOMapper::userToBalanceResponseDTO)
                 .collect(Collectors.toList());
     }
 
