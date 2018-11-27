@@ -17,4 +17,6 @@ public interface UserService {
     Iterable<UserResponseDTO> getUsersWithNegativeBalance();
 
     Iterable<UserResponseDTO> getUsersWithPositiveBalance();
+
+    UserResponseDTO getUser(long id) throws UserNotFoundException;
 }

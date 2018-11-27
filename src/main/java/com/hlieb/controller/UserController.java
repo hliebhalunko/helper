@@ -2,6 +2,7 @@ package com.hlieb.controller;
 
 import com.hlieb.dto.request.UserRequestDTO;
 import com.hlieb.dto.response.UserResponseDTO;
+import com.hlieb.exceptions.UserNotFoundException;
 import com.hlieb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,12 @@ public class UserController {
     public ResponseEntity<?> getUsersWithPositiveBalance() {
         Iterable<UserResponseDTO> users = userService.getUsersWithPositiveBalance();
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getUser(@PathVariable long id) throws UserNotFoundException {
+        UserResponseDTO responseDTO = userService.getUser(id);
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

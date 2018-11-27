@@ -21,6 +21,11 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
+    public UserResponseDTO getUser(long id) throws UserNotFoundException {
+        return DTOMapper.userToResponseDTO(userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id)));
+    }
+
+    @Override
     public long addUser(UserRequestDTO userRequestDTO) {
         User user = new User();
         DTOMapper.requestDTOtoUser(user, userRequestDTO);
