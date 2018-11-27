@@ -33,18 +33,15 @@ public class User {
     @JoinColumn(name = "user_id")
     private List<CashContribution> contributions;
     @Column
-    @NotNull
     @Enumerated(EnumType.STRING)
     private Rank rank;
     @Column
     @Enumerated(EnumType.STRING)
     private BloodType bloodType;
     @Column
-    @NotNull
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
     @Column
-    @NotNull
     private Integer balance;
 
     public void addCashContribution(CashContribution cashContribution) {

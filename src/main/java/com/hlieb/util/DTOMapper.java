@@ -11,6 +11,8 @@ import com.hlieb.entity.User;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
+
 public class DTOMapper {
 
     public static UserResponseDTO userToResponseDTO(User user) {
@@ -50,8 +52,8 @@ public class DTOMapper {
         user.setLastName(userRequestDTO.getLastName());
         user.setNickname(userRequestDTO.getNickname());
         user.setBloodType(userRequestDTO.getBloodType());
-        user.setDateOfBirth(LocalDate.parse(userRequestDTO.getDateOfBirth()));
-        user.setDateOfEnlistment(LocalDate.parse(userRequestDTO.getDateOfEnlistment()));
+        user.setDateOfBirth(isNullOrEmpty(userRequestDTO.getDateOfBirth()) ? null : LocalDate.parse(userRequestDTO.getDateOfBirth()));
+        user.setDateOfEnlistment(isNullOrEmpty(userRequestDTO.getDateOfEnlistment()) ? null : LocalDate.parse(userRequestDTO.getDateOfEnlistment()));
         user.setRank(userRequestDTO.getRank());
         user.setUserStatus(userRequestDTO.getUserStatus());
 

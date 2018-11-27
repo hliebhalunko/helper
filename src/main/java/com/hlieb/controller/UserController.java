@@ -18,7 +18,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<?> addUser(UserRequestDTO userRequestDTO) {
+    public ResponseEntity<?> addUser(@RequestBody UserRequestDTO userRequestDTO) {
         long userId = userService.addUser(userRequestDTO);
         return new ResponseEntity<>(userId, HttpStatus.OK);
     }
