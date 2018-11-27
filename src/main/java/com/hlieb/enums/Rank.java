@@ -7,17 +7,18 @@ public enum Rank {
 
 
     LEVEL_0("Recrut"),
-    LEVEL_1("Royoviy"),
-    LEVEL_2("Chotoviy"),
-    LEVEL_3("Bunchuzhniy"),
-    LEVEL_4("UberBunchuzhniy"),
-    LEVEL_5("UnterHorunzhiy"),
-    LEVEL_6("Horunzhiy"),
-    LEVEL_7("Poruchnyk"),
-    LEVEL_8("Sotnyk"),
-    LEVEL_9("Mayor"),
-    LEVEL_10("Kurinniy"),
-    LEVEL_11("Polkovnyk");
+    LEVEL_1("Strilets"),
+    LEVEL_2("Royoviy"),
+    LEVEL_3("Chotoviy"),
+    LEVEL_4("Bunchuzhniy"),
+    LEVEL_5("UberBunchuzhniy"),
+    LEVEL_6("UnterHorunzhiy"),
+    LEVEL_7("Horunzhiy"),
+    LEVEL_8("Poruchnyk"),
+    LEVEL_9("Sotnyk"),
+    LEVEL_10("Mayor"),
+    LEVEL_11("Kurinniy"),
+    LEVEL_12("Polkovnyk");
 
     private String rank;
 

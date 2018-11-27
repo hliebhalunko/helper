@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum UserStatus {
 
-    ACTIVE_DUTY,
+    ACTIVE,
     LEFT,
     RESERVE,
     KIA,

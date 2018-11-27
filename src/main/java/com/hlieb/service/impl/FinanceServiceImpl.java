@@ -88,7 +88,7 @@ public class FinanceServiceImpl implements FinanceService {
     public void conductTransaction(BalanceTransactionRequestDTO dto) throws UserNotFoundException {
 
         BalanceTransaction balanceTransaction = new BalanceTransaction();
-        balanceTransaction.setCurrentBalance(calculateCurrentBalance(balanceTransaction.getAmount()));
+        balanceTransaction.setCurrentBalance(calculateCurrentBalance(dto.getAmount()));
         balanceTransaction.setAmount(dto.getAmount());
         balanceTransaction.setDate(LocalDate.now());
         balanceTransaction.setDescription(dto.getDescription());
